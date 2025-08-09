@@ -242,6 +242,7 @@
                 font-size: 1.5rem;
                 font-weight: bold;
                 color: #60a5fa;
+                text-decoration: none;
             }
             .navbar-menu a {
                 color: #e2e8f0;
@@ -316,7 +317,7 @@
             <div id="page-content">
                 <!-- Navbar -->
                 <nav class="navbar">
-                    <span class="navbar-brand">KARAOKE ITALIANO</span>
+                    <a href="#" onclick="showPage('home')" class="navbar-brand">KARAOKE ITALIANO</a>
                     <div class="navbar-menu">
                         <a href="#" onclick="showPage('home')">Home</a>
                         <a href="#" onclick="showPage('about')">Chi siamo</a>
@@ -704,7 +705,9 @@
             };
 
             const sortVideos = () => {
-                const sortBy = sortBySelect.value;
+                const sortBy = document.getElementById('sort-by')?.value;
+                if (!sortBy || !allVideos.length) return;
+
                 let sortedVideos = [...allVideos]; // crea una copia dell'array
 
                 switch (sortBy) {
@@ -748,7 +751,8 @@
             };
 
             const loadMainVideo = (videoId) => {
-                if (playerPlaceholder) playerPlaceholder.style.display = 'none';
+                if (document.getElementById('player-placeholder')) document.getElementById('player-placeholder').style.display = 'none';
+                const mainVideoPlayer = document.getElementById('main-video-player');
                 if (mainVideoPlayer) {
                     mainVideoPlayer.style.display = 'block';
                     mainVideoPlayer.innerHTML = 
@@ -757,7 +761,6 @@
             };
             
             const init = async () => {
-                // Nasconde tutte le sezioni tranne la home
                 const allPageSections = document.querySelectorAll('.page-section');
                 allPageSections.forEach(section => {
                     if (section.id !== 'home') {
