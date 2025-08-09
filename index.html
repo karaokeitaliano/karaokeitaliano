@@ -587,7 +587,7 @@
                          errorMessage.textContent = "Errore: La chiave API potrebbe non essere valida o avere restrizioni. Controlla le impostazioni nella Google Developers Console.";
                          errorMessage.style.display = 'block';
                     }
-                    throw error; // Rilancia l'errore per bloccare le chiamate successive
+                    throw error;
                 }
             };
             
@@ -661,12 +661,14 @@
                     renderVideos(allVideos);
                 } catch (error) {
                     console.error("Errore nel recupero dei video della playlist:", error);
-                    if (errorMessage) errorMessage.style.display = 'block';
-                    if (videoGallery) {
+                    const errorMessage = document.getElementById('error-message');
+                    if (errorMessage) {
                         if (error.message.includes('400')) {
-                            videoGallery.innerHTML = '<p class="text-center text-red-500 col-span-full">Impossibile caricare i video per questa playlist. Potrebbe non essere pubblica o non esistere.</p>';
+                            errorMessage.textContent = 'Errore: la chiave API non è valida o la playlist non è accessibile. Controlla le tue credenziali e le restrizioni.';
+                            errorMessage.style.display = 'block';
                         } else {
-                            videoGallery.innerHTML = '<p class="text-center text-red-500 col-span-full">Si è verificato un errore generico. Riprova più tardi.</p>';
+                            errorMessage.textContent = 'Si è verificato un errore generico. Riprova più tardi.';
+                            errorMessage.style.display = 'block';
                         }
                     }
                     throw error;
@@ -702,8 +704,6 @@
             };
 
             const sortVideos = () => {
-                if (!sortBySelect || !allVideos.length) return;
-
                 const sortBy = sortBySelect.value;
                 let sortedVideos = [...allVideos]; // crea una copia dell'array
 
@@ -757,6 +757,7 @@
             };
             
             const init = async () => {
+                // Nasconde tutte le sezioni tranne la home
                 const allPageSections = document.querySelectorAll('.page-section');
                 allPageSections.forEach(section => {
                     if (section.id !== 'home') {
@@ -788,11 +789,6 @@
                     }
                 } catch (error) {
                     console.error("Errore nell'inizializzazione dell'app:", error);
-                    const errorMessage = document.getElementById('error-message');
-                    if (errorMessage) {
-                        errorMessage.textContent = "Errore critico nell'inizializzazione. Controlla la chiave API e la connessione.";
-                        errorMessage.style.display = 'block';
-                    }
                 }
 
                 const cookieBanner = document.getElementById('cookie-banner');
