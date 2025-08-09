@@ -338,6 +338,14 @@
                 border-radius: 0.75rem;
                 box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             }
+            .ai-output-title {
+                font-weight: 700;
+                color: #60a5fa;
+            }
+            .ai-output-text {
+                margin-top: 0.5rem;
+                color: #cbd5e1;
+            }
         `;
 
         const pageHtml = `
@@ -359,43 +367,41 @@
                     </div>
                 </nav>
 
-                <!-- Header -->
-                <header class="p-6 text-center page-section" id="home">
-                    <h1 id="channel-title" class="text-4xl font-extrabold text-blue-400 shimmer-bg w-1-2 mx-auto h-12 rounded-lg"></h1>
-                    <p class="text-xl text-slate-300 mt-2">Basi Strumentali</p>
-                </header>
-
-                <!-- Sezione Informazioni Canale -->
-                <section id="about" class="p-8 rounded-lg shadow-xl m-4 m-8 text-center channel-info page-section" style="display: none;">
-                    <div class="bg-black bg-opacity-50 p-6 rounded-lg backdrop-blur-sm">
-                        <h2 class="text-3xl font-bold text-white mb-4">Benvenuto!</h2>
-                        <div id="profile-pic-container" class="mx-auto rounded-full w-28 h-28 shimmer-bg mb-4 border-4 border-blue-400 shadow-lg"></div>
-                        <p id="channel-description" class="text-lg text-slate-200">
-                            Qui puoi trovare tutti i miei video e richiedere le tue basi personalizzate!
-                        </p>
-                        <a id="channel-link" href="#" target="_blank" class="mt-6 inline-block-button bg-red-600">
-                            Visita il Canale YouTube
-                        </a>
-                    </div>
+                <!-- Sezione Home (visibile di default) -->
+                <section class="p-6 text-center page-section" id="home">
+                    <header>
+                        <h1 id="channel-title" class="text-4xl font-extrabold text-blue-400 shimmer-bg w-1-2 mx-auto h-12 rounded-lg"></h1>
+                        <p class="text-xl text-slate-300 mt-2">Basi Strumentali</p>
+                    </header>
+                    <section id="about" class="p-8 rounded-lg shadow-xl m-4 m-8 text-center channel-info">
+                        <div class="bg-black bg-opacity-50 p-6 rounded-lg backdrop-blur-sm">
+                            <h2 class="text-3xl font-bold text-white mb-4">Benvenuto!</h2>
+                            <div id="profile-pic-container" class="mx-auto rounded-full w-28 h-28 shimmer-bg mb-4 border-4 border-blue-400 shadow-lg"></div>
+                            <p id="channel-description" class="text-lg text-slate-200">
+                                Qui puoi trovare tutti i miei video e richiedere le tue basi personalizzate!
+                            </p>
+                            <a id="channel-link" href="#" target="_blank" class="mt-6 inline-block-button bg-red-600">
+                                Visita il Canale YouTube
+                            </a>
+                        </div>
+                    </section>
+                    <section id="main-video-section" class="container mx-auto p-4 m-8">
+                        <div id="main-video-player" class="video-container bg-slate-800 rounded-xl shadow-lg transform transition-transform duration-300 mb-8 hidden">
+                            <!-- Il video principale verrà caricato qui -->
+                        </div>
+                        <div id="player-placeholder" class="bg-slate-800 p-8 rounded-xl shadow-lg text-center text-slate-400">
+                            Seleziona un video qui sotto per iniziare a guardare.
+                        </div>
+                        <!-- Nuove funzionalità AI -->
+                        <div class="ai-feature-container">
+                            <button id="generate-intro-btn" class="ai-button">✨ Genera Intro</button>
+                            <button id="summarize-lyrics-btn" class="ai-button">✨ Riassumi Testo</button>
+                            <div id="ai-output" class="ai-output-container hidden"></div>
+                        </div>
+                    </section>
                 </section>
-
-                <!-- Player Video Principale -->
-                <section id="main-video-section" class="container mx-auto p-4 m-8 page-section" style="display: none;">
-                    <div id="main-video-player" class="video-container bg-slate-800 rounded-xl shadow-lg transform transition-transform duration-300 mb-8 hidden">
-                        <!-- Il video principale verrà caricato qui -->
-                    </div>
-                    <div id="player-placeholder" class="bg-slate-800 p-8 rounded-xl shadow-lg text-center text-slate-400">
-                        Seleziona un video qui sotto per iniziare a guardare.
-                    </div>
-                    <!-- Nuove funzionalità AI -->
-                    <div class="ai-feature-container">
-                        <button id="generate-intro-btn" class="ai-button">✨ Genera Intro</button>
-                        <button id="summarize-lyrics-btn" class="ai-button">✨ Riassumi Testo</button>
-                        <div id="ai-output" class="ai-output-container hidden"></div>
-                    </div>
-                </section>
-
-                <!-- Video Recenti -->
+                
+                <!-- Video Recenti (Sezione a sé stante, ma collegata alla home) -->
                 <section class="container mx-auto p-4 m-8 page-section" id="videos-section" style="display: none;">
                     <div class="flex justify-between items-center mb-8">
                         <h2 class="text-3xl font-bold text-blue-400">Ultimi Video</h2>
@@ -509,7 +515,7 @@
                         </p>
                     </div>
                 </section>
-
+                
                 <!-- Footer -->
                 <footer class="bg-slate-800 text-center p-6 mt-8 rounded-t-xl shadow-inner">
                     <p class="text-slate-400">&copy; 2025 KARAOKE ITALIANO. Tutti i diritti riservati.</p>
@@ -632,6 +638,8 @@
             const playerPlaceholder = document.getElementById('player-placeholder');
             const genreFiltersContainer = document.getElementById('genre-filters');
             const sortBySelect = document.getElementById('sort-by');
+            const mainVideoSection = document.getElementById('main-video-section');
+            const videosSection = document.getElementById('videos-section');
             
             let allVideos = [];
             let uploadsPlaylistId = '';
@@ -645,6 +653,11 @@
                 if (targetPage) {
                     targetPage.style.display = 'block';
                     if (pageId === 'home') {
+                        if (mainVideoSection) mainVideoSection.style.display = 'block';
+                        if (videosSection) videosSection.style.display = 'none';
+                    } else if (pageId === 'videos-section') {
+                        if (videosSection) videosSection.style.display = 'block';
+                        if (mainVideoSection) mainVideoSection.style.display = 'block';
                         fetchVideosByPlaylist(uploadsPlaylistId);
                     }
                     if (pageId === 'articles-section') {
@@ -893,7 +906,6 @@
             };
             
             const init = async () => {
-                // Nasconde tutte le sezioni tranne la home
                 const allPageSections = document.querySelectorAll('.page-section');
                 allPageSections.forEach(section => {
                     if (section.id !== 'home') {
@@ -949,4 +961,26 @@
                     if (section.id === pageId) {
                         section.style.display = 'block';
                     } else {
-                        section.style.display = 'n
+                        section.style.display = 'none';
+                    }
+                });
+            };
+        }
+
+        const container = document.createElement('div');
+        container.innerHTML = pageHtml;
+        document.body.appendChild(container);
+
+        const styleElement = document.createElement('style');
+        styleElement.textContent = styleSheet;
+        document.head.appendChild(styleElement);
+
+        const interFont = document.createElement('link');
+        interFont.rel = 'stylesheet';
+        interFont.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap';
+        document.head.appendChild(interFont);
+        
+        initApp();
+    });
+</script>
+
