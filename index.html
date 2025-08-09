@@ -738,4 +738,104 @@
                     }
                 });
 
-                if (playlistId === 'uplo
+                if (playlistId === 'uploads') {
+                    await fetchVideosByPlaylist(uploadsPlaylistId);
+                } else {
+                    await fetchVideosByPlaylist(playlistId);
+                }
+                
+                sortVideos();
+            };
+
+            const loadMainVideo = (videoId) => {
+                if (playerPlaceholder) playerPlaceholder.style.display = 'none';
+                if (mainVideoPlayer) {
+                    mainVideoPlayer.style.display = 'block';
+                    mainVideoPlayer.innerHTML = 
+                        '<iframe src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                }
+            };
+            
+            const init = async () => {
+                const allPageSections = document.querySelectorAll('.page-section');
+                allPageSections.forEach(section => {
+                    if (section.id !== 'home') {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = 'block';
+                    }
+                });
+                
+                try {
+                    uploadsPlaylistId = await fetchChannelInfo();
+                    if (uploadsPlaylistId) {
+                        await fetchPlaylists();
+                        await fetchVideosByPlaylist(uploadsPlaylistId);
+                        
+                        const genreFiltersContainer = document.getElementById('genre-filters');
+                        if (genreFiltersContainer) {
+                            genreFiltersContainer.addEventListener('click', (e) => {
+                                if (e.target.classList.contains('filter-button')) {
+                                    filterVideos(e.target.dataset.playlistId);
+                                }
+                            });
+                        }
+
+                        const sortBySelect = document.getElementById('sort-by');
+                        if (sortBySelect) {
+                            sortBySelect.addEventListener('change', sortVideos);
+                        }
+                    }
+                } catch (error) {
+                    console.error("Errore nell'inizializzazione dell'app:", error);
+                    const errorMessage = document.getElementById('error-message');
+                    if (errorMessage) {
+                        errorMessage.textContent = "Errore critico nell'inizializzazione. Controlla la chiave API e la connessione.";
+                        errorMessage.style.display = 'block';
+                    }
+                }
+
+                const cookieBanner = document.getElementById('cookie-banner');
+                if (cookieBanner && localStorage.getItem('cookieAccepted') !== 'true') {
+                    cookieBanner.style.display = 'flex';
+                }
+
+                const acceptCookiesButton = document.getElementById('accept-cookies');
+                if(acceptCookiesButton) {
+                  acceptCookiesButton.addEventListener('click', () => {
+                    localStorage.setItem('cookieAccepted', 'true');
+                    if (cookieBanner) cookieBanner.style.display = 'none';
+                  });
+                }
+            };
+
+            init();
+            
+            window.showPage = (pageId) => {
+                const sections = document.querySelectorAll('.page-section');
+                sections.forEach(section => {
+                    if (section.id === pageId) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            };
+        }
+
+        const container = document.createElement('div');
+        container.innerHTML = pageHtml;
+        document.body.appendChild(container);
+
+        const styleElement = document.createElement('style');
+        styleElement.textContent = styleSheet;
+        document.head.appendChild(styleElement);
+
+        const interFont = document.createElement('link');
+        interFont.rel = 'stylesheet';
+        interFont.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap';
+        document.head.appendChild(interFont);
+        
+        initApp();
+    });
+</script>
