@@ -1,8 +1,6 @@
 <script>
-    // Questo script crea e inietta l'intera pagina web in un blocco di Google Sites.
     document.addEventListener('DOMContentLoaded', () => {
 
-        // Aggiunge gli stili CSS personalizzati e i link ai font
         const styleSheet = `
             html, body {
                 width: 100%;
@@ -18,24 +16,98 @@
                 background-size: 20px 20px;
                 background-attachment: fixed;
                 color: #fff;
+                box-sizing: border-box;
             }
-            .video-container {
-                position: relative;
-                padding-bottom: 56.25%; /* Rapporto 16:9 */
-                height: 0;
+            .container {
+                max-width: 1200px;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 1rem;
+            }
+            .flex {
+                display: flex;
+            }
+            .flex-wrap {
+                flex-wrap: wrap;
+            }
+            .justify-center {
+                justify-content: center;
+            }
+            .gap-4 {
+                gap: 1rem;
+            }
+            .grid {
+                display: grid;
+            }
+            .grid-cols-1 {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+            }
+            @media (min-width: 640px) {
+                .sm-grid-cols-2 {
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                }
+            }
+            @media (min-width: 1024px) {
+                .lg-grid-cols-3 {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+            }
+            .p-4 { padding: 1rem; }
+            .p-6 { padding: 1.5rem; }
+            .p-8 { padding: 2rem; }
+            .m-4 { margin: 1rem; }
+            .m-8 { margin: 2rem; }
+            .mt-2 { margin-top: 0.5rem; }
+            .mt-6 { margin-top: 1.5rem; }
+            .mt-8 { margin-top: 2rem; }
+            .mb-4 { margin-bottom: 1rem; }
+            .mb-6 { margin-bottom: 1.5rem; }
+            .mb-8 { margin-bottom: 2rem; }
+            .w-full { width: 100%; }
+            .w-1-2 { width: 50%; }
+            .h-12 { height: 3rem; }
+            .h-28 { height: 7rem; }
+            .h-64 { height: 16rem; }
+            .rounded-lg { border-radius: 0.5rem; }
+            .rounded-xl { border-radius: 0.75rem; }
+            .rounded-full { border-radius: 9999px; }
+            .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); }
+            .shadow-xl { box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+            .shadow-inner { box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06); }
+            .transform { transform: none; }
+            .transition-transform { transition-property: transform; transition-duration: 300ms; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+            .hover-scale-105:hover { transform: scale(1.05); }
+            .text-center { text-align: center; }
+            .text-white { color: #fff; }
+            .text-black { color: #000; }
+            .text-slate-200 { color: #e2e8f0; }
+            .text-slate-300 { color: #cbd5e1; }
+            .text-slate-400 { color: #94a3b8; }
+            .text-slate-500 { color: #64748b; }
+            .bg-slate-700 { background-color: #334155; }
+            .bg-slate-800 { background-color: #1e293b; }
+            .bg-slate-900 { background-color: #0f172a; }
+            .bg-blue-400 { background-color: #60a5fa; }
+            .bg-blue-600 { background-color: #2563eb; }
+            .bg-red-600 { background-color: #dc2626; }
+            .bg-yellow-400 { background-color: #facc15; }
+            .bg-black { background-color: #000; }
+            .bg-opacity-50 { background-color: rgba(0, 0, 0, 0.5); }
+            .backdrop-blur-sm { backdrop-filter: blur(4px); }
+            .font-semibold { font-weight: 600; }
+            .font-bold { font-weight: 700; }
+            .font-extrabold { font-weight: 800; }
+            .text-xl { font-size: 1.25rem; }
+            .text-3xl { font-size: 1.875rem; }
+            .text-4xl { font-size: 2.25rem; }
+            .hidden { display: none; }
+            .inline-block { display: inline-block; }
+            .cursor-pointer { cursor: pointer; }
+            .line-clamp-3 {
                 overflow: hidden;
-                border-radius: 0.5rem;
-            }
-            .video-container iframe {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
-            .channel-info {
-                background-size: cover;
-                background-position: center;
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 3;
             }
             .shimmer-bg {
                 background: linear-gradient(to right, #2b3a4a 8%, #415a77 18%, #2b3a4a 33%);
@@ -46,101 +118,378 @@
                 0% { background-position: -200% 0; }
                 100% { background-position: 200% 0; }
             }
+            .filter-button {
+                background-color: #334155;
+                color: #cbd5e1;
+                font-weight: 600;
+                padding: 0.5rem 1rem;
+                border-radius: 9999px;
+                transition: background-color 0.2s, transform 0.2s;
+                cursor: pointer;
+                border: none;
+            }
+            .filter-button:hover {
+                transform: scale(1.05);
+            }
+            .filter-button.active {
+                background-color: #2563eb;
+                color: #fff;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+            .mx-auto {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .block {
+                display: block;
+            }
+            .w-28 {
+                width: 7rem;
+            }
+            .video-card img {
+                border-radius: 0.5rem;
+                margin-bottom: 1rem;
+                width: 100%;
+            }
+            .video-card h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: #e2e8f0;
+            }
+            input, textarea {
+                width: 100%;
+                padding: 0.5rem 1rem;
+                background-color: #334155;
+                border-radius: 0.5rem;
+                color: #fff;
+                outline: none;
+                border: 2px solid transparent;
+                transition: border-color 0.2s;
+            }
+            input:focus, textarea:focus {
+                border-color: #60a5fa;
+                outline: none;
+            }
+            label {
+                display: block;
+                color: #94a3b8;
+                margin-bottom: 0.5rem;
+            }
+            .button-submit {
+                width: 100%;
+                background-color: #2563eb;
+                color: #fff;
+                font-weight: 700;
+                padding: 0.75rem 1.5rem;
+                border-radius: 0.5rem;
+                transition: background-color 0.3s, transform 0.3s;
+                border: none;
+                cursor: pointer;
+            }
+            .button-submit:hover {
+                background-color: #1d4ed8;
+                transform: scale(1.05);
+            }
+            .mt-4 {
+                margin-top: 1rem;
+            }
+            .items-center {
+                align-items: center;
+            }
+            .justify-between {
+                justify-content: space-between;
+            }
+            .text-base {
+                font-size: 1rem;
+            }
+            .p-0 {
+                padding: 0;
+            }
+            .inline-block-button {
+                display: inline-block;
+                padding: 0.75rem 1.5rem;
+                font-weight: 700;
+                border-radius: 9999px;
+                transition: background-color 0.3s, transform 0.3s;
+                text-decoration: none;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+            .inline-block-button.bg-red-600 {
+                background-color: #dc2626;
+                color: #fff;
+            }
+            .inline-block-button.bg-red-600:hover {
+                background-color: #b91c1c;
+                transform: scale(1.05);
+            }
+            .inline-block-button.bg-yellow-400 {
+                background-color: #facc15;
+                color: #000;
+            }
+            .inline-block-button.bg-yellow-400:hover {
+                background-color: #eab308;
+                transform: scale(1.05);
+            }
+            .navbar {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+                background-color: #1e293b;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+            .navbar-brand {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: #60a5fa;
+            }
+            .navbar-menu a {
+                color: #e2e8f0;
+                text-decoration: none;
+                margin-left: 1rem;
+                transition: color 0.2s;
+            }
+            .navbar-menu a:hover {
+                color: #60a5fa;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #334155;
+                min-width: 160px;
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+                z-index: 1;
+                border-radius: 0.5rem;
+                top: 100%;
+                right: 0;
+            }
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+            .dropdown-content a {
+                color: white;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+            .dropdown-content a:hover {
+                background-color: #415a77;
+            }
+            .hidden-section {
+                display: none;
+            }
+            .cookie-banner {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background-color: #1e293b;
+                color: #fff;
+                padding: 1rem;
+                z-index: 1000;
+                box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .cookie-banner-text {
+                flex: 1;
+            }
+            .cookie-banner-buttons button {
+                background-color: #2563eb;
+                color: #fff;
+                font-weight: bold;
+                padding: 0.5rem 1rem;
+                border-radius: 0.5rem;
+                border: none;
+                cursor: pointer;
+            }
         `;
 
-        // Struttura HTML dell'intera pagina
         const pageHtml = `
-            <!-- Header -->
-            <header class="p-6 text-center">
-                <h1 id="channel-title" class="text-4xl font-extrabold text-blue-400 shimmer-bg w-1/2 mx-auto h-12 rounded-lg"></h1>
-                <p class="text-xl text-slate-300 mt-2">I tuoi video, la tua community, il tuo spazio!</p>
-            </header>
+            <div id="page-content">
+                <!-- Navbar -->
+                <nav class="navbar">
+                    <span class="navbar-brand">KARAOKE ITALIANO</span>
+                    <div class="navbar-menu">
+                        <a href="#" onclick="showPage('home')">Home</a>
+                        <a href="#" onclick="showPage('about')">Chi siamo</a>
+                        <a href="#" onclick="showPage('contact')">Contatti</a>
+                        <div class="dropdown">
+                            <a href="#" class="dropbtn">Legali</a>
+                            <div class="dropdown-content">
+                                <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
+                                <a href="#" onclick="showPage('terms')">Termini e Condizioni</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
 
-            <!-- Sezione Informazioni Canale -->
-            <section id="channel-info" class="p-8 rounded-lg shadow-xl m-4 md:m-8 text-center channel-info">
-                <div class="bg-black bg-opacity-50 p-6 rounded-lg backdrop-blur-sm">
-                    <h2 class="text-3xl font-bold text-white mb-4">Benvenuto!</h2>
-                    <div id="profile-pic-container" class="mx-auto rounded-full w-28 h-28 shimmer-bg mb-4 border-4 border-blue-400 shadow-lg"></div>
-                    <p id="channel-description" class="text-lg text-slate-200">
-                        Qui puoi trovare tutti i miei video e richiedere le tue basi personalizzate!
-                    </p>
-                    <a id="channel-link" href="#" target="_blank" class="mt-6 inline-block bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-full transition-colors duration-300 transform hover:scale-105 shadow-lg">
-                        Visita il Canale YouTube
+                <!-- Header -->
+                <header class="p-6 text-center page-section" id="home">
+                    <h1 id="channel-title" class="text-4xl font-extrabold text-blue-400 shimmer-bg w-1-2 mx-auto h-12 rounded-lg"></h1>
+                    <p class="text-xl text-slate-300 mt-2">Basi Strumentali</p>
+                </header>
+
+                <!-- Sezione Informazioni Canale -->
+                <section id="about" class="p-8 rounded-lg shadow-xl m-4 m-8 text-center channel-info page-section" style="display: none;">
+                    <div class="bg-black bg-opacity-50 p-6 rounded-lg backdrop-blur-sm">
+                        <h2 class="text-3xl font-bold text-white mb-4">Benvenuto!</h2>
+                        <div id="profile-pic-container" class="mx-auto rounded-full w-28 h-28 shimmer-bg mb-4 border-4 border-blue-400 shadow-lg"></div>
+                        <p id="channel-description" class="text-lg text-slate-200">
+                            Qui puoi trovare tutti i miei video e richiedere le tue basi personalizzate!
+                        </p>
+                        <a id="channel-link" href="#" target="_blank" class="mt-6 inline-block-button bg-red-600">
+                            Visita il Canale YouTube
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Player Video Principale -->
+                <section id="main-video-section" class="container mx-auto p-4 m-8 page-section" style="display: none;">
+                    <div id="main-video-player" class="video-container bg-slate-800 rounded-xl shadow-lg transform transition-transform duration-300 mb-8 hidden">
+                        <!-- Il video principale verrà caricato qui -->
+                    </div>
+                    <div id="player-placeholder" class="bg-slate-800 p-8 rounded-xl shadow-lg text-center text-slate-400">
+                        Seleziona un video qui sotto per iniziare a guardare.
+                    </div>
+                </section>
+
+                <!-- Video Recenti -->
+                <section class="container mx-auto p-4 m-8 page-section" id="videos-section" style="display: none;">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="text-3xl font-bold text-blue-400">Ultimi Video</h2>
+                        <div class="flex items-center gap-4">
+                            <label for="sort-by" class="text-slate-300 text-base">Ordina per:</label>
+                            <select id="sort-by" class="bg-slate-700 text-white rounded-lg p-2 border-none focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                <option value="date-desc">Data (Più recente)</option>
+                                <option value="date-asc">Data (Meno recente)</option>
+                                <option value="title-asc">Nome (A-Z)</option>
+                                <option value="title-desc">Nome (Z-A)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Filtri per genere -->
+                    <div id="genre-filters" class="flex flex-wrap justify-center gap-4 mb-8">
+                        <button class="filter-button active" data-playlist-id="uploads">Tutti</button>
+                        <!-- I filtri verranno aggiunti dinamicamente qui -->
+                    </div>
+                    
+                    <div id="video-gallery" class="grid grid-cols-1 sm-grid-cols-2 lg-grid-cols-3 gap-8">
+                        <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64"></div>
+                        <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden sm-block"></div>
+                        <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden lg-block"></div>
+                    </div>
+                    <div id="error-message" class="text-center text-red-500 mt-8 hidden">
+                        Si è verificato un errore durante il recupero dei video. Riprova più tardi.
+                    </div>
+                </section>
+                
+                <!-- Form Richiesta Basi Personalizzate -->
+                <section id="contact" class="container mx-auto p-4 m-8 page-section" style="display: none;">
+                    <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Richiedi una Base Personalizzata</h2>
+                    <div class="bg-slate-800 p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                        <p class="text-slate-300 mb-6 text-center">Compila il modulo e ti contatterò per la tua base personalizzata!</p>
+                        <form action="https://formspree.io/f/mwpqapvp" method="POST">
+                            <div class="mb-4">
+                                <label for="name" class="block text-slate-400 mb-2">Il tuo nome</label>
+                                <input type="text" id="name" name="Nome" placeholder="Mario Rossi" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="block text-slate-400 mb-2">La tua email</label>
+                                <input type="email" id="email" name="Email" placeholder="mario.rossi@email.com" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="request" class="block text-slate-400 mb-2">Dettagli della richiesta (brano, artista, ecc.)</label>
+                                <textarea id="request" name="Dettagli Richiesta" rows="4" placeholder="Es: 'La canzone del sole' di Lucio Battisti" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
+                            </div>
+                            <button type="submit" class="button-submit">
+                                Invia Richiesta
+                            </button>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Sezione "Offrimi un Caffè" -->
+                <section id="donations" class="container mx-auto p-4 m-8 page-section" style="display: none;">
+                    <h2 class="text-3xl font-bold text-blue-400 mb-4">Supporta il Canale</h2>
+                    <p class="text-slate-300 mb-6 max-w-xl mx-auto">Se ti piace il mio lavoro e vuoi supportarmi, puoi offrirmi un caffè! Il tuo supporto mi aiuta a creare nuovi contenuti.</p>
+                    <a href="https://buymeacoffee.com/karaokeitaliano" target="_blank" class="inline-block-button bg-yellow-400">
+                        Offrimi un Caffè!
                     </a>
-                </div>
-            </section>
+                </section>
+                
+                <!-- Pagine legali -->
+                <section id="privacy" class="container mx-auto p-4 m-8 page-section" style="display: none;">
+                    <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Privacy Policy</h2>
+                    <div class="bg-slate-800 p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-white mb-4">Informativa sulla Privacy (GDPR)</h3>
+                        <p class="text-slate-300">
+                            <b>1. Titolare del Trattamento</b><br>
+                            Il titolare del trattamento dei dati personali è <span id="privacy-channel-name"></span>, e-mail: magickar2014@gmail.com.<br><br>
+                            <b>2. Dati Raccolti</b><br>
+                            Raccogliamo solo i dati che ci fornisci volontariamente tramite il modulo di contatto, come nome e indirizzo email, per rispondere alle tue richieste di basi personalizzate. Non raccogliamo altri dati personali sensibili.<br><br>
+                            <b>3. Finalità del Trattamento</b><br>
+                            I tuoi dati sono utilizzati esclusivamente per rispondere alle tue richieste e per scopi di comunicazione relativi al nostro servizio. Non utilizziamo i tuoi dati per marketing diretto senza il tuo esplicito consenso.<br><br>
+                            <b>4. Base Giuridica</b><br>
+                            La base giuridica per il trattamento dei tuoi dati è il tuo consenso esplicito, manifestato tramite l'invio del modulo di contatto. Il trattamento è necessario per l'esecuzione di un servizio da te richiesto.<br><br>
+                            <b>5. Periodo di Conservazione</b><br>
+                            I dati vengono conservati per il tempo necessario a gestire la tua richiesta e per un periodo massimo di [specificare il periodo] dopo l'ultima comunicazione.<br><br>
+                            <b>6. Diritti dell'Interessato</b><br>
+                            Hai il diritto di accedere, rettificare, cancellare, limitare il trattamento dei tuoi dati e opporti al trattamento. Per esercitare questi diritti, puoi contattarci all'indirizzo e-mail indicato. Hai anche il diritto di presentare un reclamo a un'autorità di controllo.
+                        </p>
+                    </div>
+                </section>
+                <section id="terms" class="container mx-auto p-4 m-8 page-section" style="display: none;">
+                    <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Termini e Condizioni</h2>
+                    <div class="bg-slate-800 p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold text-white mb-4">Termini d'uso</h3>
+                        <p class="text-slate-300">
+                            <b>1. Accettazione dei Termini</b><br>
+                            Utilizzando questo sito web e i servizi offerti, accetti di essere vincolato dai presenti Termini e Condizioni.<br><br>
+                            <b>2. Servizi Offerti</b><br>
+                            Il sito offre basi strumentali per karaoke e la possibilità di richiedere basi personalizzate. I video e le basi sono forniti tramite embed da YouTube e i diritti d'autore rimangono ai rispettivi proprietari. Il nostro servizio non detiene la proprietà intellettuale sui contenuti incorporati.<br><br>
+                            <b>3. Responsabilità</b><br>
+                            Non siamo responsabili per l'uso improprio dei contenuti. L'utente è l'unico responsabile per l'utilizzo delle basi strumentali.<br><br>
+                            <b>4. Modifiche</b><br>
+                            Ci riserviamo il diritto di modificare i presenti Termini e Condizioni in qualsiasi momento. L'uso continuato del sito implica l'accettazione di tali modifiche.<br><br>
+                            <b>5. Legge Applicabile e Foro Competente</b><br>
+                            I presenti termini sono regolati dalla legge italiana. Qualsiasi controversia relativa a questi termini sarà devoluta alla competenza esclusiva dei tribunali di [specificare il foro competente, es. Roma].
+                        </p>
+                    </div>
+                </section>
 
-            <!-- Player Video Principale -->
-            <section class="container mx-auto p-4 md:p-8">
-                <div id="main-video-player" class="video-container bg-slate-800 rounded-xl shadow-lg transform transition-transform duration-300 mb-8 hidden">
-                    <!-- Il video principale verrà caricato qui -->
-                </div>
-                <div id="player-placeholder" class="bg-slate-800 p-8 rounded-xl shadow-lg text-center text-slate-400">
-                    Seleziona un video qui sotto per iniziare a guardare.
-                </div>
-            </section>
+                <!-- Footer -->
+                <footer class="bg-slate-800 text-center p-6 mt-8 rounded-t-xl shadow-inner">
+                    <p class="text-slate-400">&copy; 2025 KARAOKE ITALIANO. Tutti i diritti riservati.</p>
+                    <p class="text-slate-500 mt-2">
+                        Seguimi anche su: 
+                        <a href="#" class="text-blue-400 hover-underline">Instagram</a> | 
+                        <a href="#" class="text-blue-400 hover-underline">Twitter</a>
+                    </p>
+                </footer>
 
-            <!-- Video Recenti -->
-            <section class="container mx-auto p-4 md:p-8">
-                <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Ultimi Video</h2>
-                <div id="video-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64"></div>
-                    <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden sm:block"></div>
-                    <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden lg:block"></div>
+                <!-- Cookie Consent Banner -->
+                <div id="cookie-banner" class="cookie-banner hidden">
+                    <div class="cookie-banner-text">
+                        <p>Questo sito utilizza i cookie per migliorare la tua esperienza. Proseguendo la navigazione acconsenti all'uso dei cookie.</p>
+                    </div>
+                    <div class="cookie-banner-buttons">
+                        <button id="accept-cookies">Accetto</button>
+                    </div>
                 </div>
-                <div id="error-message" class="text-center text-red-500 mt-8 hidden">
-                    Si è verificato un errore durante il recupero dei video. Riprova più tardi.
-                </div>
-            </section>
-            
-            <!-- Form Richiesta Basi Personalizzate -->
-            <section class="container mx-auto p-4 md:p-8">
-                <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Richiedi una Base Personalizzata</h2>
-                <div class="bg-slate-800 p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
-                    <p class="text-slate-300 mb-6 text-center">Compila il modulo e ti contatterò per la tua base personalizzata!</p>
-                    <form action="mailto:magickar2014@gmail.com" method="post" enctype="text/plain">
-                        <div class="mb-4">
-                            <label for="name" class="block text-slate-400 mb-2">Il tuo nome</label>
-                            <input type="text" id="name" name="Nome" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="email" class="block text-slate-400 mb-2">La tua email</label>
-                            <input type="email" id="email" name="Email" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="request" class="block text-slate-400 mb-2">Dettagli della richiesta (brano, artista, ecc.)</label>
-                            <textarea id="request" name="Dettagli Richiesta" rows="4" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
-                        </div>
-                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors duration-300 transform hover:scale-105 shadow-lg">
-                            Invia Richiesta
-                        </button>
-                    </form>
-                </div>
-            </section>
-
-            <!-- Sezione "Offrimi un Caffè" -->
-            <section class="container mx-auto p-4 md:p-8 text-center">
-                <h2 class="text-3xl font-bold text-blue-400 mb-4">Supporta il Canale</h2>
-                <p class="text-slate-300 mb-6 max-w-xl mx-auto">Se ti piace il mio lavoro e vuoi supportarmi, puoi offrirmi un caffè! Il tuo supporto mi aiuta a creare nuovi contenuti.</p>
-                <a href="https://buymeacoffee.com/karaokeitaliano" target="_blank" class="inline-block bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 px-8 rounded-full transition-colors duration-300 transform hover:scale-105 shadow-lg">
-                    Offrimi un Caffè!
-                </a>
-            </section>
-
-            <!-- Footer -->
-            <footer class="bg-slate-800 text-center p-6 mt-8 rounded-t-xl shadow-inner">
-                <p class="text-slate-400">&copy; 2025 Il Mio Canale YouTube. Tutti i diritti riservati.</p>
-                <p class="text-slate-500 mt-2">
-                    Seguimi anche su: 
-                    <a href="#" class="text-blue-400 hover:underline">Instagram</a> | 
-                    <a href="#" class="text-blue-400 hover:underline">Twitter</a>
-                </p>
-            </footer>
+            </div>
         `;
 
-        // Funzione principale che esegue tutta la logica
         function initApp() {
-            const apiKey = 'AIzaSyAx2p2Rj209WL8LcP48QckuGeZwY7xpTGU'; 
+            const apiKey = 'AIzaSyBdaQlsVri7WKKutgESjYmImeH4WQ5A_1o'; 
             const channelId = 'UC09bE-qRBo72IIQ54Xaf-EA';
             const videoGallery = document.getElementById('video-gallery');
             const errorMessage = document.getElementById('error-message');
@@ -151,6 +500,63 @@
             const channelDescription = document.getElementById('channel-description');
             const mainVideoPlayer = document.getElementById('main-video-player');
             const playerPlaceholder = document.getElementById('player-placeholder');
+            const genreFiltersContainer = document.getElementById('genre-filters');
+            const sortBySelect = document.getElementById('sort-by');
+            
+            let allVideos = [];
+            let uploadsPlaylistId = '';
+            
+            const showPage = (pageId) => {
+                const sections = document.querySelectorAll('.page-section');
+                sections.forEach(section => {
+                    section.style.display = 'none';
+                });
+                const targetPage = document.getElementById(pageId);
+                if (targetPage) {
+                    targetPage.style.display = 'block';
+                    if (pageId === 'home') {
+                        fetchVideosByPlaylist(uploadsPlaylistId);
+                    }
+                }
+            };
+
+            const updateChannelInfo = (channelName, profilePicUrl, bannerUrl, descriptionText) => {
+                const privacyChannelNameSpan = document.getElementById('privacy-channel-name');
+                const navbarBrand = document.querySelector('.navbar-brand');
+                const footerCopyright = document.querySelector('footer p:first-of-type');
+
+                if (channelTitle) {
+                    channelTitle.textContent = channelName;
+                    channelTitle.classList.remove('shimmer-bg', 'w-1-2', 'h-12');
+                }
+                if (navbarBrand) {
+                    navbarBrand.textContent = channelName;
+                }
+                if (footerCopyright) {
+                    footerCopyright.textContent = `© 2025 ${channelName}. Tutti i diritti riservati.`;
+                }
+                if (profilePicContainer) {
+                    const profilePic = document.createElement('img');
+                    profilePic.src = profilePicUrl;
+                    profilePic.alt = 'Profile Picture';
+                    profilePic.className = 'rounded-full w-28 h-28 mx-auto mb-4 border-4 border-blue-400 shadow-lg';
+                    profilePicContainer.innerHTML = '';
+                    profilePicContainer.appendChild(profilePic);
+                }
+                
+                if (channelInfoSection) {
+                    channelInfoSection.style.backgroundImage = 'url(' + bannerUrl + ')';
+                }
+                if (channelDescription) {
+                    channelDescription.textContent = descriptionText;
+                }
+                if (channelLink) {
+                    channelLink.href = 'https://www.youtube.com/channel/' + channelId;
+                }
+                if (privacyChannelNameSpan) {
+                    privacyChannelNameSpan.textContent = channelName;
+                }
+            };
 
             const fetchChannelInfo = async () => {
                 const url = 'https://www.googleapis.com/youtube/v3/channels?id=' + channelId + '&key=' + apiKey + '&part=snippet,brandingSettings,contentDetails';
@@ -162,42 +568,77 @@
                     }
                     const data = await response.json();
                     
+                    if (!data.items || data.items.length === 0) {
+                        throw new Error('Channel information not found.');
+                    }
+                    
                     const channelName = data.items[0].snippet.title;
                     const profilePicUrl = data.items[0].snippet.thumbnails.high.url;
                     const bannerUrl = data.items[0].brandingSettings.image.bannerImageUrl;
                     const descriptionText = 'Qui puoi trovare tutti i miei video e richiedere le tue basi personalizzate!';
-                    
-                    channelTitle.textContent = channelName;
-                    channelTitle.classList.remove('shimmer-bg', 'w-1/2', 'h-12');
-                    
-                    const profilePic = document.createElement('img');
-                    profilePic.src = profilePicUrl;
-                    profilePic.alt = 'Profile Picture';
-                    profilePic.className = 'rounded-full w-28 h-28 mx-auto mb-4 border-4 border-blue-400 shadow-lg';
-                    profilePicContainer.innerHTML = '';
-                    profilePicContainer.appendChild(profilePic);
-                    profilePicContainer.classList.remove('shimmer-bg');
-                    
-                    channelInfoSection.style.backgroundImage = 'url(' + bannerUrl + ')';
-                    channelDescription.textContent = descriptionText;
-                    channelLink.href = 'https://www.youtube.com/channel/' + channelId;
+
+                    updateChannelInfo(channelName, profilePicUrl, bannerUrl, descriptionText);
                     
                     return data.items[0].contentDetails.relatedPlaylists.uploads;
                 } catch (error) {
                     console.error("Errore nel recupero delle informazioni del canale:", error);
-                    errorMessage.classList.remove('hidden');
-                    return null;
+                    const errorMessage = document.getElementById('error-message');
+                    if (errorMessage) {
+                         errorMessage.textContent = "Errore: La chiave API potrebbe non essere valida o avere restrizioni. Controlla le impostazioni nella Google Developers Console.";
+                         errorMessage.style.display = 'block';
+                    }
+                    throw error;
+                }
+            };
+            
+            const fetchPlaylists = async () => {
+                const url = 'https://www.googleapis.com/youtube/v3/playlists?channelId=' + channelId + '&key=' + apiKey + '&part=snippet,contentDetails&maxResults=50';
+                
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error('HTTP error! status: ' + response.status);
+                    }
+                    const data = await response.json();
+                    
+                    const popularPlaylists = data.items
+                        .sort((a, b) => (b.contentDetails?.itemCount || 0) - (a.contentDetails?.itemCount || 0))
+                        .slice(0, 5);
+
+                    if (genreFiltersContainer) {
+                        genreFiltersContainer.innerHTML = '<button class="filter-button active" data-playlist-id="uploads">Tutti</button>';
+                        popularPlaylists.forEach(playlist => {
+                            const playlistName = playlist.snippet.title;
+                            const playlistId = playlist.id;
+                            const button = document.createElement('button');
+                            button.className = 'filter-button';
+                            button.textContent = playlistName;
+                            button.dataset.playlistId = playlistId;
+                            genreFiltersContainer.appendChild(button);
+                        });
+                    }
+                } catch (error) {
+                    console.error("Errore nel recupero delle playlist:", error);
+                    const errorMessage = document.getElementById('error-message');
+                    if (errorMessage) {
+                         errorMessage.textContent = "Errore: La chiave API potrebbe non essere valida o avere restrizioni. Controlla le impostazioni nella Google Developers Console.";
+                         errorMessage.style.display = 'block';
+                    }
+                    throw error;
                 }
             };
 
-            const fetchVideos = async (uploadsPlaylistId) => {
-                if (!uploadsPlaylistId) {
-                    videoGallery.innerHTML = '';
-                    return;
-                }
+            const fetchVideosByPlaylist = async (playlistId) => {
+                 if (videoGallery) {
+                     videoGallery.innerHTML = `
+                        <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64"></div>
+                        <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden sm-block"></div>
+                        <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden lg-block"></div>
+                    `;
+                 }
                 
-                const maxResults = 6;
-                const uploadsUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?playlistId=' + uploadsPlaylistId + '&key=' + apiKey + '&part=snippet&maxResults=' + maxResults;
+                const maxResults = 50; 
+                const uploadsUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?playlistId=' + playlistId + '&key=' + apiKey + '&part=snippet&maxResults=' + maxResults;
                 
                 try {
                     const videosResponse = await fetch(uploadsUrl);
@@ -206,58 +647,178 @@
                     }
                     const videosData = await videosResponse.json();
 
-                    videoGallery.innerHTML = '';
-                    if (videosData.items.length === 0) {
-                        videoGallery.innerHTML = '<p class="text-center text-slate-400 col-span-full">Nessun video trovato nel canale.</p>';
-                    } else {
-                        const firstVideoId = videosData.items[0].snippet.resourceId.videoId;
-                        loadMainVideo(firstVideoId);
-
-                        videosData.items.forEach(item => {
-                            const videoId = item.snippet.resourceId.videoId;
-                            const title = item.snippet.title;
-                            const thumbnailUrl = item.snippet.thumbnails.medium.url;
-
-                            const videoCard = 
-                                '<div class="bg-slate-800 p-4 rounded-xl shadow-lg transform hover:scale-105 transition-transform duration-300 cursor-pointer video-card" data-video-id="' + videoId + '">' +
-                                    '<img src="' + thumbnailUrl + '" alt="' + title + '" class="rounded-lg mb-4 w-full">' +
-                                    '<h3 class="text-xl font-semibold text-slate-100">' + title + '</h3>' +
-                                '</div>';
-                            videoGallery.innerHTML += videoCard;
-                        });
-                        
-                        document.querySelectorAll('.video-card').forEach(card => {
-                            card.addEventListener('click', (e) => {
-                                const videoId = e.currentTarget.dataset.videoId;
-                                loadMainVideo(videoId);
-                            });
-                        });
+                    if (!videosData.items || videosData.items.length === 0) {
+                        if (videoGallery) {
+                             videoGallery.innerHTML = '<p class="text-center text-slate-400 col-span-full">Nessun video trovato per questa playlist.</p>';
+                        }
+                        allVideos = [];
+                        return;
                     }
+
+                    allVideos = videosData.items;
+                    const firstVideoId = allVideos[0].snippet.resourceId.videoId;
+                    loadMainVideo(firstVideoId);
+                    renderVideos(allVideos);
                 } catch (error) {
-                    console.error("Errore nel recupero dei video:", error);
-                    errorMessage.classList.remove('hidden');
-                    videoGallery.innerHTML = '';
+                    console.error("Errore nel recupero dei video della playlist:", error);
+                    const errorMessage = document.getElementById('error-message');
+                    if (errorMessage) {
+                        if (error.message.includes('400')) {
+                            errorMessage.textContent = 'Errore: la chiave API non è valida o la playlist non è accessibile. Controlla le tue credenziali e le restrizioni.';
+                            errorMessage.style.display = 'block';
+                        } else {
+                            errorMessage.textContent = 'Si è verificato un errore generico. Riprova più tardi.';
+                            errorMessage.style.display = 'block';
+                        }
+                    }
+                    throw error;
                 }
+            };
+            
+            const renderVideos = (videosToRender) => {
+                if (!videoGallery) return;
+                videoGallery.innerHTML = '';
+                if (videosToRender.length === 0) {
+                    videoGallery.innerHTML = '<p class="text-center text-slate-400 col-span-full">Nessun video trovato.</p>';
+                } else {
+                    videosToRender.forEach(item => {
+                        const videoId = item.snippet.resourceId.videoId;
+                        const title = item.snippet.title;
+                        const thumbnailUrl = item.snippet.thumbnails?.medium?.url || 'https://placehold.co/320x180/2b3a4a/fff?text=N/A';
+
+                        const videoCard = 
+                            '<div class="bg-slate-800 p-4 rounded-xl shadow-lg transform hover-scale-105 transition-transform duration-300 cursor-pointer video-card" data-video-id="' + videoId + '">' +
+                                '<img src="' + thumbnailUrl + '" alt="' + title + '" class="rounded-lg mb-4 w-full">' +
+                                '<h3 class="text-xl font-semibold text-slate-100">' + title + '</h3>' +
+                            '</div>';
+                        videoGallery.innerHTML += videoCard;
+                    });
+                    
+                    document.querySelectorAll('.video-card').forEach(card => {
+                        card.addEventListener('click', (e) => {
+                            const videoId = e.currentTarget.dataset.videoId;
+                            loadMainVideo(videoId);
+                        });
+                    });
+                }
+            };
+
+            const sortVideos = () => {
+                const sortBy = sortBySelect.value;
+                let sortedVideos = [...allVideos]; // crea una copia dell'array
+
+                switch (sortBy) {
+                    case 'date-desc':
+                        sortedVideos.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
+                        break;
+                    case 'date-asc':
+                        sortedVideos.sort((a, b) => new Date(a.snippet.publishedAt) - new Date(b.snippet.publishedAt));
+                        break;
+                    case 'title-asc':
+                        sortedVideos.sort((a, b) => a.snippet.title.localeCompare(b.snippet.title));
+                        break;
+                    case 'title-desc':
+                        sortedVideos.sort((a, b) => b.snippet.title.localeCompare(a.snippet.title));
+                        break;
+                }
+                
+                renderVideos(sortedVideos);
+                
+                if(sortedVideos.length > 0) {
+                    loadMainVideo(sortedVideos[0].snippet.resourceId.videoId);
+                }
+            };
+
+            const filterVideos = async (playlistId) => {
+                const buttons = document.querySelectorAll('.filter-button');
+                buttons.forEach(button => {
+                    button.classList.remove('active');
+                    if (button.dataset.playlistId === playlistId) {
+                        button.classList.add('active');
+                    }
+                });
+
+                if (playlistId === 'uploads') {
+                    await fetchVideosByPlaylist(uploadsPlaylistId);
+                } else {
+                    await fetchVideosByPlaylist(playlistId);
+                }
+                
+                sortVideos();
             };
 
             const loadMainVideo = (videoId) => {
-                playerPlaceholder.classList.add('hidden');
-                mainVideoPlayer.classList.remove('hidden');
-                mainVideoPlayer.innerHTML = 
-                    '<iframe src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-            }
-            
-            const init = async () => {
-                const uploadsPlaylistId = await fetchChannelInfo();
-                if (uploadsPlaylistId) {
-                    fetchVideos(uploadsPlaylistId);
+                if (playerPlaceholder) playerPlaceholder.style.display = 'none';
+                if (mainVideoPlayer) {
+                    mainVideoPlayer.style.display = 'block';
+                    mainVideoPlayer.innerHTML = 
+                        '<iframe src="https://www.youtube.com/embed/' + videoId + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
                 }
             };
             
+            const init = async () => {
+                // Nasconde tutte le sezioni tranne la home
+                const allPageSections = document.querySelectorAll('.page-section');
+                allPageSections.forEach(section => {
+                    if (section.id !== 'home') {
+                        section.style.display = 'none';
+                    } else {
+                        section.style.display = 'block';
+                    }
+                });
+                
+                try {
+                    uploadsPlaylistId = await fetchChannelInfo();
+                    if (uploadsPlaylistId) {
+                        await fetchPlaylists();
+                        await fetchVideosByPlaylist(uploadsPlaylistId);
+                        
+                        const genreFiltersContainer = document.getElementById('genre-filters');
+                        if (genreFiltersContainer) {
+                            genreFiltersContainer.addEventListener('click', (e) => {
+                                if (e.target.classList.contains('filter-button')) {
+                                    filterVideos(e.target.dataset.playlistId);
+                                }
+                            });
+                        }
+
+                        const sortBySelect = document.getElementById('sort-by');
+                        if (sortBySelect) {
+                            sortBySelect.addEventListener('change', sortVideos);
+                        }
+                    }
+                } catch (error) {
+                    console.error("Errore nell'inizializzazione dell'app:", error);
+                }
+
+                const cookieBanner = document.getElementById('cookie-banner');
+                if (cookieBanner && localStorage.getItem('cookieAccepted') !== 'true') {
+                    cookieBanner.style.display = 'flex';
+                }
+
+                const acceptCookiesButton = document.getElementById('accept-cookies');
+                if(acceptCookiesButton) {
+                  acceptCookiesButton.addEventListener('click', () => {
+                    localStorage.setItem('cookieAccepted', 'true');
+                    if (cookieBanner) cookieBanner.style.display = 'none';
+                  });
+                }
+            };
+
             init();
+            
+            window.showPage = (pageId) => {
+                const sections = document.querySelectorAll('.page-section');
+                sections.forEach(section => {
+                    if (section.id === pageId) {
+                        section.style.display = 'block';
+                    } else {
+                        section.style.display = 'none';
+                    }
+                });
+            };
         }
 
-        // Inietta l'HTML e il CSS nel documento
         const container = document.createElement('div');
         container.innerHTML = pageHtml;
         document.body.appendChild(container);
@@ -266,17 +827,11 @@
         styleElement.textContent = styleSheet;
         document.head.appendChild(styleElement);
 
-        const tailwindScript = document.createElement('script');
-        tailwindScript.src = 'https://cdn.tailwindcss.com';
-        document.head.appendChild(tailwindScript);
-
         const interFont = document.createElement('link');
         interFont.rel = 'stylesheet';
         interFont.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap';
         document.head.appendChild(interFont);
         
-        // Esegui la funzione principale dopo aver iniettato il contenuto
         initApp();
-
     });
 </script>
