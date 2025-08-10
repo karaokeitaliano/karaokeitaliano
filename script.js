@@ -31,10 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetPage) {
             targetPage.style.display = 'block';
             if (pageId === 'home') {
-                if (document.getElementById('home')) {
-                    document.getElementById('home').style.display = 'block';
-                    fetchVideosAndPlaylistInfo();
-                }
+                const homeSections = document.querySelectorAll('#home > section, #home > div');
+                homeSections.forEach(section => section.style.display = 'block');
+                fetchVideosAndPlaylistInfo();
             } else if (pageId === 'articles-section') {
                 generateArticles();
             }
@@ -386,7 +385,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Main initialization function
-    const init = async () => {
+    const fetchVideosAndPlaylistInfo = async () => {
         try {
             uploadsPlaylistId = await fetchChannelInfo();
             if (uploadsPlaylistId) {
@@ -410,25 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Errore nell'inizializzazione dell'app:", error);
         }
-        
-        // Gestione dei pulsanti AI
-        const generateIntroBtn = document.getElementById('generate-intro-btn');
-        const summarizeLyricsBtn = document.getElementById('summarize-lyrics-btn');
-        const aiOutputContainer = document.getElementById('ai-output');
 
-        if (generateIntroBtn) {
-            generateIntroBtn.addEventListener('click', async () => {
-                const videoTitle = allVideos[0].snippet.title; // Assumi che il video principale sia il primo
-                await generateIntro(videoTitle);
-            });
-        }
-        if (summarizeLyricsBtn) {
-            summarizeLyricsBtn.addEventListener('click', async () => {
-                const videoTitle = allVideos[0].snippet.title; // Assumi che il video principale sia il primo
-                await summarizeLyrics(videoTitle);
-            });
-        }
-        
         checkCookieConsent();
 
         const acceptCookiesButton = document.getElementById('accept-cookies');
@@ -441,10 +422,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Esegui l'inizializzazione quando il DOM è pronto
-    init();
-    
-    // Gestione della navigazione per le diverse pagine
     window.showPage = (pageId) => {
         const sections = document.querySelectorAll('.page-section');
         sections.forEach(section => {
@@ -454,27 +431,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetPage) {
             targetPage.style.display = 'block';
             if (pageId === 'home') {
-                init();
-            }
-            if (pageId === 'articles-section') {
+                fetchVideosAndPlaylistInfo();
+            } else if (pageId === 'articles-section') {
                 generateArticles();
             }
         }
     };
-
-    // Inizializzazione del contenuto HTML e stili
-    const container = document.createElement('div');
-    container.innerHTML = pageHtml;
-    document.body.appendChild(container);
-
-    const styleElement = document.createElement('style');
-    styleElement.textContent = styleSheet;
-    document.head.appendChild(styleElement);
-
-    const interFont = document.createElement('link');
-    interFont.rel = 'stylesheet';
-    interFont.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap';
-    document.head.appendChild(interFont);
-
+    
+    // Run initial fetch
+    fetchVideosAndPlaylistInfo();
 });
-</script>
