@@ -4,51 +4,186 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KARAOKE ITALIANO - Basi Strumentali</title>
-    <meta name="description" content="KARAOKE ITALIANO - Basi strumentali per cantare le tue canzoni preferite. Richiedi basi personalizzate e scopri articoli sul karaoke.">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
 </head>
 <body>
     <div id="page-content">
-        
         <!-- Navbar -->
-        <nav class="navbar" aria-label="Navigazione principale">
-            <button type="button" onclick="showPage('home')" class="navbar-brand" aria-label="Vai alla Home">KARAOKE ITALIANO</button>
+        <nav class="navbar">
+            <a href="#" onclick="showPage('home')" class="navbar-brand">KARAOKE ITALIANO</a>
             <div class="navbar-menu">
-                <button type="button" onclick="showPage('home')">Home</button>
-                <button type="button" onclick="showPage('articles-section')">Articoli</button>
-                <button type="button" onclick="showPage('contact')">Contatti</button>
+                <a href="#" onclick="showPage('home')">Home</a>
+                <a href="#" onclick="showPage('articles-section')">Articoli</a>
+                <a href="#" onclick="showPage('contact')">Contatti</a>
                 <div class="dropdown">
-                    <button type="button" class="dropbtn" aria-haspopup="true" aria-expanded="false">Legali</button>
-                    <div class="dropdown-content" role="menu">
-                        <button type="button" onclick="showPage('privacy')">Privacy Policy</button>
-                        <button type="button" onclick="showPage('terms')">Termini e Condizioni</button>
+                    <a href="#" class="dropbtn">Legali</a>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
+                        <a href="#" onclick="showPage('terms')">Termini e Condizioni</a>
                     </div>
                 </div>
             </div>
         </nav>
 
-        <!-- Sezione Home -->
+        <!-- Sezione Home (visibile di default) -->
         <section class="p-6 text-center page-section" id="home">
             <header>
-                <h1 id="channel-title" class="text-4xl font-extrabold text-blue-400 shimmer-bg w-1/2 mx-auto h-12 rounded-lg"></h1>
+                <h1 id="channel-title" class="text-4xl font-extrabold text-blue-400 shimmer-bg w-1-2 mx-auto h-12 rounded-lg"></h1>
                 <p class="text-xl text-slate-300 mt-2">Basi Strumentali</p>
             </header>
-
-            <section id="about" class="p-8 rounded-lg shadow-xl m-8 text-center channel-info">
+            <section id="about" class="p-8 rounded-lg shadow-xl m-4 m-8 text-center channel-info">
                 <div class="bg-black bg-opacity-50 p-6 rounded-lg backdrop-blur-sm">
                     <h2 class="text-3xl font-bold text-white mb-4">Benvenuto!</h2>
-                    <div id="profile-pic-container" class="mx-auto rounded-full w-28 h-28 shimmer-bg mb-4 border-4 border-blue-400 shadow-lg" aria-label="Immagine profilo canale"></div>
+                    <div id="profile-pic-container" class="mx-auto rounded-full w-28 h-28 shimmer-bg mb-4 border-4 border-blue-400 shadow-lg"></div>
                     <p id="channel-description" class="text-lg text-slate-200">
                         Qui puoi trovare tutti i miei video e richiedere le tue basi personalizzate!
                     </p>
-                    <a id="channel-link" href="#" target="_blank" rel="noopener noreferrer" class="mt-6 inline-block-button bg-red-600" aria-label="Visita il canale YouTube">
+                    <a id="channel-link" href="#" target="_blank" class="mt-6 inline-block-button bg-red-600">
                         Visita il Canale YouTube
                     </a>
                 </div>
             </section>
-
-            <!-- Donazioni -->
             <section id="donations" class="container mx-auto p-4 m-8">
                 <h2 class="text-3xl font-bold text-blue-400 mb-4">Supporta il Canale</h2>
-                <p class="text-slate-300 mb-6 max-w-xl mx-auto">
+                <p class="text-slate-300 mb-6 max-w-xl mx-auto">Se ti piace il mio lavoro e vuoi supportarmi, puoi offrirmi un caffè! Il tuo supporto mi aiuta a creare nuovi contenuti.</p>
+                <a href="https://buymeacoffee.com/karaokeitaliano" target="_blank" class="inline-block-button bg-yellow-400">
+                    Offrimi un Caffè!
+                </a>
+            </section>
+            
+            <section id="player-and-ai-section" class="container mx-auto p-4 m-8">
+                <div id="main-video-player" class="video-container bg-slate-800 rounded-xl shadow-lg transform transition-transform duration-300 mb-8 hidden">
+                    <!-- Il video principale verrà caricato qui -->
+                </div>
+                <div id="player-placeholder" class="bg-slate-800 p-8 rounded-xl shadow-lg text-center text-slate-400">
+                    Seleziona un video qui sotto per iniziare a guardare.
+                </div>
+            </section>
+
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-3xl font-bold text-blue-400">Ultimi Video</h2>
+                <div class="flex items-center gap-4">
+                    <label for="sort-by" class="text-slate-300 text-base">Ordina per:</label>
+                    <select id="sort-by" class="bg-slate-700 text-white rounded-lg p-2 border-none focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <option value="date-desc">Data (Più recente)</option>
+                        <option value="date-asc">Data (Meno recente)</option>
+                        <option value="title-asc">Nome (A-Z)</option>
+                        <option value="title-desc">Nome (Z-A)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Filtri per genere -->
+            <div id="genre-filters" class="flex flex-wrap justify-center gap-4 mb-8">
+                <button class="filter-button active" data-playlist-id="uploads">Tutti</button>
+                <!-- I filtri verranno aggiunti dinamicamente qui -->
+            </div>
+            
+            <div id="video-gallery" class="grid grid-cols-1 sm-grid-cols-2 lg-grid-cols-3 gap-8">
+                <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64"></div>
+                <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden sm-block"></div>
+                <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden lg-block"></div>
+            </div>
+            <div id="error-message" class="text-center text-red-500 mt-8 hidden">
+                Si è verificato un errore durante il recupero dei video. Riprova più tardi.
+            </div>
+        </section>
+
+        <!-- Sezione Articoli -->
+        <section class="container mx-auto p-4 m-8 page-section hidden" id="articles-section">
+            <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Articoli sul Karaoke</h2>
+            <div id="articles-container" class="grid grid-cols-1 sm-grid-cols-2 lg-grid-cols-3 gap-8">
+                <div class="bg-slate-800 p-8 rounded-xl shadow-lg text-center text-slate-400">
+                    Caricamento articoli in corso...
+                </div>
+            </div>
+        </section>
+        
+        <!-- Form Richiesta Basi Personalizzate -->
+        <section id="contact" class="container mx-auto p-4 m-8 page-section hidden">
+            <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Richiedi una Base Personalizzata</h2>
+            <div class="bg-slate-800 p-8 rounded-xl shadow-lg max-w-2xl mx-auto">
+                <p class="text-slate-300 mb-6 text-center">Compila il modulo e ti contatterò per la tua base personalizzata!</p>
+                <form action="https://formspree.io/f/mwpqapvp" method="POST">
+                    <div class="mb-4">
+                        <label for="name" class="block text-slate-400 mb-2">Il tuo nome</label>
+                        <input type="text" id="name" name="Nome" placeholder="Mario Rossi" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="email" class="block text-slate-400 mb-2">La tua email</label>
+                        <input type="email" id="email" name="Email" placeholder="mario.rossi@email.com" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="request" class="block text-slate-400 mb-2">Dettagli della richiesta (brano, artista, ecc.)</label>
+                        <textarea id="request" name="Dettagli Richiesta" rows="4" placeholder="Es: 'La canzone del sole' di Lucio Battisti" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required></textarea>
+                    </div>
+                    <button type="submit" class="button-submit">
+                        Invia Richiesta
+                    </button>
+                </form>
+            </div>
+        </section>
+        
+        <!-- Pagine legali -->
+        <section id="privacy" class="container mx-auto p-4 m-8 page-section hidden">
+            <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Privacy Policy</h2>
+            <div class="bg-slate-800 p-8 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-white mb-4">Informativa sulla Privacy (GDPR)</h3>
+                <p class="text-slate-300">
+                    <b>1. Titolare del Trattamento</b><br>
+                    Il titolare del trattamento dei dati personali è <span id="privacy-channel-name"></span>, e-mail: magickar2014@gmail.com.<br><br>
+                    <b>2. Dati Raccolti</b><br>
+                    Raccogliamo solo i dati che ci fornisci volontariamente tramite il modulo di contatto, come nome e indirizzo email, per rispondere alle tue richieste di basi personalizzate. Non raccogliamo altri dati personali sensibili.<br><br>
+                    <b>3. Finalità del Trattamento</b><br>
+                    I tuoi dati sono utilizzati esclusivamente per rispondere alle tue richieste e per scopi di comunicazione relativi al nostro servizio. Non utilizziamo i tuoi dati per marketing diretto senza il tuo esplicito consenso.<br><br>
+                    <b>4. Base Giuridica</b><br>
+                    La base giuridica per il trattamento dei tuoi dati è il tuo consenso esplicito, manifestato tramite l'invio del modulo di contatto. Il trattamento è necessario per l'esecuzione di un servizio da te richiesto.<br><br>
+                    <b>5. Periodo di Conservazione</b><br>
+                    I dati vengono conservati per il tempo necessario a gestire la tua richiesta e per un periodo massimo di [specificare il periodo] dopo l'ultima comunicazione.<br><br>
+                    <b>6. Diritti dell'Interessato</b><br>
+                    Hai il diritto di accedere, rettificare, cancellare, limitare il trattamento dei tuoi dati e opporti al trattamento. Per esercitare questi diritti, puoi contattarci all'indirizzo e-mail indicato. Hai anche il diritto di presentare un reclamo a un'autorità di controllo.
+                </p>
+            </div>
+        </section>
+        <section id="terms" class="container mx-auto p-4 m-8 page-section hidden">
+            <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Termini e Condizioni</h2>
+            <div class="bg-slate-800 p-8 rounded-xl shadow-lg">
+                <h3 class="text-2xl font-bold text-white mb-4">Termini d'uso</h3>
+                <p class="text-slate-300">
+                    <b>1. Accettazione dei Termini</b><br>
+                    Utilizzando questo sito web e i servizi offerti, accetti di essere vincolato dai presenti Termini e Condizioni.<br><br>
+                    <b>2. Servizi Offerti</b><br>
+                    Il sito offre basi strumentali per karaoke e la possibilità di richiedere basi personalizzate. I video e le basi sono forniti tramite embed da YouTube e i diritti d'autore rimangono ai rispettivi proprietari. Il nostro servizio non detiene la proprietà intellettuale sui contenuti incorporati.<br><br>
+                    <b>3. Responsabilità</b><br>
+                    Non siamo responsabili per l'uso improprio dei contenuti. L'utente è l'unico responsabile per l'utilizzo delle basi strumentali.<br><br>
+                    <b>4. Modifiche</b><br>
+                    Ci riserviamo il diritto di modificare i presenti Termini e Condizioni in qualsiasi momento. L'uso continuato del sito implica l'accettazione di tali modifiche.<br><br>
+                    <b>5. Legge Applicabile e Foro Competente</b><br>
+                    I presenti termini sono regolati dalla legge italiana. Qualsiasi controversia relativa a questi termini sarà devoluta alla competenza esclusiva dei tribunali di [specificare il foro competente, es. Roma].
+                </p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-slate-800 text-center p-6 mt-8 rounded-t-xl shadow-inner">
+            <p class="text-slate-400">&copy; 2025 KARAOKE ITALIANO. Tutti i diritti riservati.</p>
+            <p class="text-slate-500 mt-2">
+                Seguimi anche su: 
+                <a href="https://www.facebook.com/profile.php?id=61559821414350" class="text-blue-400 hover-underline">Facebook</a>
+            </p>
+        </footer>
+
+        <!-- Cookie Consent Banner -->
+        <div id="cookie-banner" class="cookie-banner hidden">
+            <div class="cookie-banner-text">
+                <p>Questo sito utilizza i cookie per migliorare la tua esperienza. Proseguendo la navigazione acconsenti all'uso dei cookie.</p>
+            </div>
+            <div class="cookie-banner-buttons">
+                <button id="accept-cookies">Accetto</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
