@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KARAOKE ITALIANO - Basi Strumentali</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
 </head>
 <body>
     <div id="page-content">
         <!-- Navbar -->
         <nav class="navbar">
-            <a href="#" id="navbar-brand" class="navbar-brand">KARAOKE ITALIANO</a>
+            <a href="#" onclick="showPage('home')" class="navbar-brand">KARAOKE ITALIANO</a>
             <div class="navbar-menu">
-                <a href="#" data-page="home">Home</a>
-                <a href="#" data-page="articles-section">Articoli</a>
-                <a href="#" data-page="contact">Contatti</a>
+                <a href="#" onclick="showPage('home')">Home</a>
+                <a href="#" onclick="showPage('articles-section')">Articoli</a>
+                <a href="#" onclick="showPage('contact')">Contatti</a>
                 <div class="dropdown">
                     <a href="#" class="dropbtn">Legali</a>
                     <div class="dropdown-content">
-                        <a href="#" data-page="privacy">Privacy Policy</a>
-                        <a href="#" data-page="terms">Termini e Condizioni</a>
+                        <a href="#" onclick="showPage('privacy')">Privacy Policy</a>
+                        <a href="#" onclick="showPage('terms')">Termini e Condizioni</a>
                     </div>
                 </div>
             </div>
@@ -29,7 +29,7 @@
         <!-- Sezione Home (visibile di default) -->
         <section class="p-6 text-center page-section" id="home">
             <header>
-                <h1 id="channel-title" class="text-4xl font-extrabold text-blue-400 shimmer-bg w-1/2 mx-auto h-12 rounded-lg"></h1>
+                <h1 id="channel-title" class="text-4xl font-extrabold text-blue-400 shimmer-bg w-1-2 mx-auto h-12 rounded-lg"></h1>
                 <p class="text-xl text-slate-300 mt-2">Basi Strumentali</p>
             </header>
             <section id="about" class="p-8 rounded-lg shadow-xl m-4 m-8 text-center channel-info">
@@ -80,10 +80,10 @@
                 <!-- I filtri verranno aggiunti dinamicamente qui -->
             </div>
             
-            <div id="video-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="video-gallery" class="grid grid-cols-1 sm-grid-cols-2 lg-grid-cols-3 gap-8">
                 <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64"></div>
-                <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden sm:block"></div>
-                <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden lg:block"></div>
+                <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden sm-block"></div>
+                <div class="shimmer-bg p-4 rounded-xl shadow-lg h-64 hidden lg-block"></div>
             </div>
             <div id="error-message" class="text-center text-red-500 mt-8 hidden">
                 Si è verificato un errore durante il recupero dei video. Riprova più tardi.
@@ -93,7 +93,7 @@
         <!-- Sezione Articoli -->
         <section class="container mx-auto p-4 m-8 page-section hidden" id="articles-section">
             <h2 class="text-3xl font-bold text-center text-blue-400 mb-8">Articoli sul Karaoke</h2>
-            <div id="articles-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div id="articles-container" class="grid grid-cols-1 sm-grid-cols-2 lg-grid-cols-3 gap-8">
                 <div class="bg-slate-800 p-8 rounded-xl shadow-lg text-center text-slate-400">
                     Caricamento articoli in corso...
                 </div>
@@ -108,11 +108,11 @@
                 <form action="https://formspree.io/f/mwpqapvp" method="POST">
                     <div class="mb-4">
                         <label for="name" class="block text-slate-400 mb-2">Il tuo nome</label>
-                        <input type="text" id="name" name="Nome" placeholder="Mario Rossi" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                        <input type="text" id="name" name="Nome" placeholder="Mario Rossi" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                     </div>
                     <div class="mb-4">
                         <label for="email" class="block text-slate-400 mb-2">La tua email</label>
-                        <input type="email" id="email" name="Email" placeholder="mario.rossi@email.com" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                        <input type="email" id="email" name="Email" placeholder="mario.rossi@email.com" class="w-full px-4 py-2 bg-slate-700 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-400" required>
                     </div>
                     <div class="mb-4">
                         <label for="request" class="block text-slate-400 mb-2">Dettagli della richiesta (brano, artista, ecc.)</label>
@@ -131,17 +131,17 @@
             <div class="bg-slate-800 p-8 rounded-xl shadow-lg">
                 <h3 class="text-2xl font-bold text-white mb-4">Informativa sulla Privacy (GDPR)</h3>
                 <p class="text-slate-300">
-                    <strong>1. Titolare del Trattamento</strong><br />
-                    Il titolare del trattamento dei dati personali è <span id="privacy-channel-name"></span>, e-mail: magickar2014@gmail.com.<br /><br />
-                    <strong>2. Dati Raccolti</strong><br />
-                    Raccogliamo solo i dati che ci fornisci volontariamente tramite il modulo di contatto, come nome e indirizzo email, per rispondere alle tue richieste di basi personalizzate. Non raccogliamo altri dati personali sensibili.<br /><br />
-                    <strong>3. Finalità del Trattamento</strong><br />
-                    I tuoi dati sono utilizzati esclusivamente per rispondere alle tue richieste e per scopi di comunicazione relativi al nostro servizio. Non utilizziamo i tuoi dati per marketing diretto senza il tuo esplicito consenso.<br /><br />
-                    <strong>4. Base Giuridica</strong><br />
-                    La base giuridica per il trattamento dei tuoi dati è il tuo consenso esplicito, manifestato tramite l'invio del modulo di contatto. Il trattamento è necessario per l'esecuzione di un servizio da te richiesto.<br /><br />
-                    <strong>5. Periodo di Conservazione</strong><br />
-                    I dati vengono conservati per il tempo necessario a gestire la tua richiesta e per un periodo massimo di [specificare il periodo] dopo l'ultima comunicazione.<br /><br />
-                    <strong>6. Diritti dell'Interessato</strong><br />
+                    <b>1. Titolare del Trattamento</b><br>
+                    Il titolare del trattamento dei dati personali è <span id="privacy-channel-name"></span>, e-mail: magickar2014@gmail.com.<br><br>
+                    <b>2. Dati Raccolti</b><br>
+                    Raccogliamo solo i dati che ci fornisci volontariamente tramite il modulo di contatto, come nome e indirizzo email, per rispondere alle tue richieste di basi personalizzate. Non raccogliamo altri dati personali sensibili.<br><br>
+                    <b>3. Finalità del Trattamento</b><br>
+                    I tuoi dati sono utilizzati esclusivamente per rispondere alle tue richieste e per scopi di comunicazione relativi al nostro servizio. Non utilizziamo i tuoi dati per marketing diretto senza il tuo esplicito consenso.<br><br>
+                    <b>4. Base Giuridica</b><br>
+                    La base giuridica per il trattamento dei tuoi dati è il tuo consenso esplicito, manifestato tramite l'invio del modulo di contatto. Il trattamento è necessario per l'esecuzione di un servizio da te richiesto.<br><br>
+                    <b>5. Periodo di Conservazione</b><br>
+                    I dati vengono conservati per il tempo necessario a gestire la tua richiesta e per un periodo massimo di [specificare il periodo] dopo l'ultima comunicazione.<br><br>
+                    <b>6. Diritti dell'Interessato</b><br>
                     Hai il diritto di accedere, rettificare, cancellare, limitare il trattamento dei tuoi dati e opporti al trattamento. Per esercitare questi diritti, puoi contattarci all'indirizzo e-mail indicato. Hai anche il diritto di presentare un reclamo a un'autorità di controllo.
                 </p>
             </div>
@@ -151,15 +151,15 @@
             <div class="bg-slate-800 p-8 rounded-xl shadow-lg">
                 <h3 class="text-2xl font-bold text-white mb-4">Termini d'uso</h3>
                 <p class="text-slate-300">
-                    <strong>1. Accettazione dei Termini</strong><br />
-                    Utilizzando questo sito web e i servizi offerti, accetti di essere vincolato dai presenti Termini e Condizioni.<br /><br />
-                    <strong>2. Servizi Offerti</strong><br />
-                    Il sito offre basi strumentali per karaoke e la possibilità di richiedere basi personalizzate. I video e le basi sono forniti tramite embed da YouTube e i diritti d'autore rimangono ai rispettivi proprietari. Il nostro servizio non detiene la proprietà intellettuale sui contenuti incorporati.<br /><br />
-                    <strong>3. Responsabilità</strong><br />
-                    Non siamo responsabili per l'uso improprio dei contenuti. L'utente è l'unico responsabile per l'utilizzo delle basi strumentali.<br /><br />
-                    <strong>4. Modifiche</strong><br />
-                    Ci riserviamo il diritto di modificare i presenti Termini e Condizioni in qualsiasi momento. L'uso continuato del sito implica l'accettazione di tali modifiche.<br /><br />
-                    <strong>5. Legge Applicabile e Foro Competente</strong><br />
+                    <b>1. Accettazione dei Termini</b><br>
+                    Utilizzando questo sito web e i servizi offerti, accetti di essere vincolato dai presenti Termini e Condizioni.<br><br>
+                    <b>2. Servizi Offerti</b><br>
+                    Il sito offre basi strumentali per karaoke e la possibilità di richiedere basi personalizzate. I video e le basi sono forniti tramite embed da YouTube e i diritti d'autore rimangono ai rispettivi proprietari. Il nostro servizio non detiene la proprietà intellettuale sui contenuti incorporati.<br><br>
+                    <b>3. Responsabilità</b><br>
+                    Non siamo responsabili per l'uso improprio dei contenuti. L'utente è l'unico responsabile per l'utilizzo delle basi strumentali.<br><br>
+                    <b>4. Modifiche</b><br>
+                    Ci riserviamo il diritto di modificare i presenti Termini e Condizioni in qualsiasi momento. L'uso continuato del sito implica l'accettazione di tali modifiche.<br><br>
+                    <b>5. Legge Applicabile e Foro Competente</b><br>
                     I presenti termini sono regolati dalla legge italiana. Qualsiasi controversia relativa a questi termini sarà devoluta alla competenza esclusiva dei tribunali di [specificare il foro competente, es. Roma].
                 </p>
             </div>
