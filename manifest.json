@@ -1,0 +1,21 @@
+{
+  "name": "KARAOKE ITALIANO",
+  "short_name": "KaraokeIT",
+  "description": "Database Ufficiale Basi Musicali Karaoke Italiano",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#05070a",
+  "theme_color": "#dc2626",
+  "icons": [
+    {
+      "src": "https://picsum.photos/seed/karaoke/192/192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://picsum.photos/seed/karaoke/512/512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

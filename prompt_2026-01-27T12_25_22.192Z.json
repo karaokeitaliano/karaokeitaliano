@@ -1,0 +1,63 @@
+
+import React from 'react';
+
+const TermsOfService: React.FC = () => {
+  return (
+    <section className="max-w-4xl mx-auto space-y-8 animate-fade py-10">
+      <h2 className="text-4xl font-black italic text-white uppercase tracking-tighter">Termini di <span className="text-red-600">Servizio</span></h2>
+      <div className="glass p-8 md:p-12 rounded-[2.5rem] space-y-8 text-slate-400 text-sm leading-relaxed overflow-y-auto max-h-[70vh] custom-scrollbar">
+        <div className="space-y-4">
+          <p className="font-bold text-white">Ultimo aggiornamento: 23 Marzo 2026</p>
+          <p>Utilizzando il portale "YouTube Smart Archive" per il canale Karaoke Italiano, accetti i seguenti Termini di Servizio.</p>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-white font-bold uppercase tracking-widest text-xs border-l-2 border-red-600 pl-3">1. Accettazione dei Termini</h3>
+          <p>L'accesso e l'uso di questo sito costituiscono l'accettazione integrale dei presenti termini. Se non accetti questi termini, ti preghiamo di non utilizzare il portale.</p>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-white font-bold uppercase tracking-widest text-xs border-l-2 border-red-600 pl-3">2. Proprietà Intellettuale e Copyright</h3>
+          <p>Tutti i contenuti video visualizzati tramite questo portale appartengono ai legittimi proprietari del canale YouTube "Karaoke Italiano". Il portale agisce come un aggregatore e facilitatore di ricerca. Non rivendichiamo alcun diritto di proprietà sulle basi musicali o sui video stessi.</p>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-white font-bold uppercase tracking-widest text-xs border-l-2 border-red-600 pl-3">3. Utilizzo Consentito</h3>
+          <p>Il portale è destinato esclusivamente ad uso personale e non commerciale. È vietato:</p>
+          <ul className="list-disc pl-5 space-y-2">
+            <li>Utilizzare il sito per scopi illegali o non autorizzati.</li>
+            <li>Tentare di interferire con il corretto funzionamento del sito.</li>
+            <li>Estrarre dati in modo automatizzato (scraping) senza autorizzazione.</li>
+          </ul>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-white font-bold uppercase tracking-widest text-xs border-l-2 border-red-600 pl-3">4. Integrazione con YouTube</h3>
+          <p>Questo sito utilizza i servizi API di YouTube. Utilizzando il portale, accetti di essere vincolato dai <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:underline">Termini di Servizio di YouTube</a> e dalle <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-red-500 hover:underline">Norme sulla Privacy di Google</a>.</p>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-white font-bold uppercase tracking-widest text-xs border-l-2 border-red-600 pl-3">5. Disclaimer di Garanzia</h3>
+          <p>Il servizio è fornito "così com'è" e "come disponibile". Non garantiamo che il servizio sarà ininterrotto, privo di errori o che i video saranno sempre disponibili (dipendendo dalla piattaforma YouTube).</p>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-white font-bold uppercase tracking-widest text-xs border-l-2 border-red-600 pl-3">6. Limitazione di Responsabilità</h3>
+          <p>In nessun caso saremo responsabili per danni diretti, indiretti, incidentali o consequenziali derivanti dall'uso o dall'impossibilità di usare il portale.</p>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-white font-bold uppercase tracking-widest text-xs border-l-2 border-red-600 pl-3">7. Modifiche ai Termini</h3>
+          <p>Ci riserviamo il diritto di modificare questi termini in qualsiasi momento. Le modifiche saranno efficaci immediatamente dopo la loro pubblicazione sul sito.</p>
+        </div>
+
+        <div className="space-y-4">
+          <h3 className="text-white font-bold uppercase tracking-widest text-xs border-l-2 border-red-600 pl-3">8. Legge Applicabile</h3>
+          <p>I presenti termini sono regolati dalle leggi italiane. Qualsiasi controversia sarà soggetta alla giurisdizione esclusiva dei tribunali italiani.</p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default TermsOfService;
